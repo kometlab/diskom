@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Diskom - Dashboard</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    </head>
+    <body>
+        <header class="header">
+            <div class="header-content">
+                <span class="header-title">DisKom <mark>[BETA]</mark></span>
+                <div class="links">
+                    <a onclick="openPage();" class="link">Create Server</a>
+                </div>
+            </div>
+        </header>
+        <div class="servers">
+            <div class="server-list">
+                <div class="center">
+                    <img src="https://cdn.discordapp.com/icons/1094340488175292466/a15c0621a23fda7e808f41f56916efbd.webp?size=96" alt="LOGO" class="h1icon">
+                    <h1 class="titleh1">Diskom - Dashboard</h1>
+                    <span class="h1text">Secure server monitoring - for yourself</span>
+                </div>
+            </div>
+        </div>
+        <div class="create-table anim">
+            <a onclick="closePage();"><div class="background"></div></a>
+            <div class="create">
+                <h1>Add Server</h1>
+                <p class="text">You can add your server for promotion</p>
+                <div>
+                    <div class="block">
+                        <p>What is the name of your server? <mark>*</mark></p>
+                        <input id="name" type="text" maxlength="14">
+                    </div>
+                    <div class="block">
+                        <p>What description does your server have? <mark>*</mark></p>
+                        <input id="desk" type="text" maxlength="14">
+                    </div>
+                    <div class="block">
+                        <p>What is the cdn link to your server picture (discord cdn or linked image)? <mark>*</mark></p>
+                        <input id="image" type="text">
+                    </div>
+                    <div class="block">
+                        <p>What is your invite link to your server (infinite time)? <mark>*</mark></p>
+                        <input id="link" type="text">
+                    </div>
+                    <button onclick="closePage();" class="close">Cancle</button>
+                    <button onclick="submitForm();" class="submit" type="submit">Submit</button><br>
+                    <p class="desk">We are not responsible for your information.</p>
+                </div>
+            </div>
+        </div>
+        <div class="ok-table anim">
+            <a onclick="closeOk();"><div class="background"></div></a>
+            <div class="ok create">
+                <img src="../static/assets/okey.png"><br>
+                <button onclick="closeOk();" class="submit">Nice!</button>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <script src="{{url_for('static', filename='src/manager.js')}}"></script>
+        <script>
+            serverlist = $('.server-list');
+            data = '{{ data|tojson }}'
+            for (const [key, value] of Object.entries(JSON.parse(data))) {
+                serverlist.append(
+                    '<div class="server anim">'+
+                        '<img src="'+value.icon+'" class="server-image">'+
+                        '<span class="server-title">'+value.title+'</span><br>'+
+                        '<span class="server-text">'+value.text+'</span><br>'+
+                        '<a href="'+value.link+'""><button class="join">Join</button></a>'+
+                    '</div>'
+                )
+            }
+
+            function closeOk() {
+                $('.ok-table').css({"display": "none"});
+            }
+
+            function closePage() {
+                $('.create-table').css({"display": "none"});
+                $('#name').val('');
+                $('#desk').val('');
+                $('#image').val('');
+                $('#link').val('');
+            }
+            
+            function openPage() {
+                $('.create-table').css({"display": "block"})
+            }
+            
+            function submitForm() {
+                if(
+                    $('#name').val() != null &&
+                    $('#desk').val() != null &&
+                    $('#image').val() != null &&
+                    $('#link').val() != null
+                ) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/",
+                        data: JSON.stringify({
+                            icon: $('#image').val(),
+                            title: $('#name').val(),
+                            text: $('#desk').val(),
+                            link: $('#link').val()
+                        }),
+                        success: function (data) {
+                            console.log(data.title);
+                            console.log(data.link);
+                        },
+                        dataType: "json"
+                    });
+                    serverlist.append(
+                        '<div class="server anim">'+
+                            '<img src="'+$('#image').val()+'" class="server-image">'+
+                            '<span class="server-title">'+$('#name').val()+'</span><br>'+
+                            '<span class="server-text">'+$('#desk').val()+'</span><br>'+
+                            '<a href="'+$('#link').val()+'""><button class="join">Join</button></a>'+
+                        '</div>'
+                    )
+                    $('.ok-table').css({"display": "block"});
+                    closePage();
+                }
+            }
+        </script>
+    </body>
+</html>
