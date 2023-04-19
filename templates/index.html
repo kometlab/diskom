@@ -23,6 +23,15 @@
                     <h1 class="titleh1">Diskom - Dashboard</h1>
                     <span class="h1text">Secure server monitoring - for yourself</span>
                 </div>
+                <div class="server mag anim">
+                    <img src="../static/assets/sponsor/sponsor1.png" class="server-image">
+                    <img class="imgmag" src="https://img.icons8.com/color/48/null/star--v1.png" alt="star">
+                    <img class="imgmag" src="https://img.icons8.com/color/48/null/verified-badge.png" alt="star">
+                    <span class="server-title magtitle mag">AdaBot</span><br>
+                    <p class="server-text mag-dark">Artificial intelligence voice bot, a powerful assistant built on the best technologies</p><br>
+                    <a href="https://discord.gg/BzBWReTsnX"><button class="join">Join</button></a>
+                    <a href="https://www.donationalerts.com/r/nullguy"><button class="join">Donate</button></a>
+                </div>
             </div>
         </div>
         <div class="create-table anim">
@@ -33,11 +42,11 @@
                 <div>
                     <div class="block">
                         <p>What is the name of your server? <mark>*</mark></p>
-                        <input id="name" type="text" maxlength="14">
+                        <input id="name" type="text" maxlength="20">
                     </div>
                     <div class="block">
                         <p>What description does your server have? <mark>*</mark></p>
-                        <input id="desk" type="text" maxlength="14">
+                        <input id="desk" type="text" maxlength="48">
                     </div>
                     <div class="block">
                         <p>What is the cdn link to your server picture (discord cdn or linked image)? <mark>*</mark></p>
@@ -61,7 +70,6 @@
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-        <script src="{{url_for('static', filename='src/manager.js')}}"></script>
         <script>
             serverlist = $('.server-list');
             data = '{{ data|tojson }}'
@@ -70,63 +78,12 @@
                     '<div class="server anim">'+
                         '<img src="'+value.icon+'" class="server-image">'+
                         '<span class="server-title">'+value.title+'</span><br>'+
-                        '<span class="server-text">'+value.text+'</span><br>'+
+                        '<p class="server-text">'+value.text+'</p><br>'+
                         '<a href="'+value.link+'""><button class="join">Join</button></a>'+
                     '</div>'
                 )
             }
-
-            function closeOk() {
-                $('.ok-table').css({"display": "none"});
-            }
-
-            function closePage() {
-                $('.create-table').css({"display": "none"});
-                $('#name').val('');
-                $('#desk').val('');
-                $('#image').val('');
-                $('#link').val('');
-            }
-            
-            function openPage() {
-                $('.create-table').css({"display": "block"})
-            }
-            
-            function submitForm() {
-                if(
-                    $('#name').val() != null &&
-                    $('#desk').val() != null &&
-                    $('#image').val() != null &&
-                    $('#link').val() != null
-                ) {
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        url: "/",
-                        data: JSON.stringify({
-                            icon: $('#image').val(),
-                            title: $('#name').val(),
-                            text: $('#desk').val(),
-                            link: $('#link').val()
-                        }),
-                        success: function (data) {
-                            console.log(data.title);
-                            console.log(data.link);
-                        },
-                        dataType: "json"
-                    });
-                    serverlist.append(
-                        '<div class="server anim">'+
-                            '<img src="'+$('#image').val()+'" class="server-image">'+
-                            '<span class="server-title">'+$('#name').val()+'</span><br>'+
-                            '<span class="server-text">'+$('#desk').val()+'</span><br>'+
-                            '<a href="'+$('#link').val()+'""><button class="join">Join</button></a>'+
-                        '</div>'
-                    )
-                    $('.ok-table').css({"display": "block"});
-                    closePage();
-                }
-            }
         </script>
+        <script src="{{url_for('static', filename='src/manager.js')}}"></script>
     </body>
 </html>

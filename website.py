@@ -10,7 +10,6 @@ def index():
     if request.method == 'POST':
         data1 = request.json
         data.append(dict(data1))
-        print(data)
         with open('database/db.json', 'w') as file2:
             json.dump(
                 data,

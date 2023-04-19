@@ -19,6 +19,9 @@
 }.anim {
     animation-name: anim;
     animation-duration: 0.2s;
+}p, span {
+    word-wrap: break-word;
+    width: 200px;
 }
 
 .header {
@@ -61,6 +64,7 @@
     padding-top: 45px;
 }.server {
     width: 280px;
+    vertical-align: top;
     background-color: #282b30;
     height: 120px;
     display: inline-block;
@@ -84,7 +88,7 @@
     border-radius: 2.5px;
     color: #fcfcfc;
     position: relative;
-    top: -34px;
+    top: -58px;
     left: 68px;
     padding: 5px 26px;
     font-size: 9pt;
@@ -99,6 +103,7 @@
     top: -40px;
     left: 68px;
     font-weight: 400;
+    width: 200px;
 }.server-image:hover {
     cursor: pointer;
     filter: brightness(0.6);
@@ -221,4 +226,18 @@
     text-align: center;
 }.ok>button {
     margin-top: 30px;
+}
+
+.mag {
+    background-color: #2b241b;
+    color: #faf2e9;
+}.mag-dark {
+    color: #9d9894;
+}.imgmag {
+    width: 20px;
+    top: -37px;
+    position:relative;
+}.magtitle {
+    position: relative;
+    left: 4px;
 }
