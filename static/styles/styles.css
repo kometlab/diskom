@@ -129,6 +129,16 @@
     color: #9b9b9c;
     font-weight: 400;
     margin-top: 5px;
+}.tag {
+    color: #9d9894;
+    background-color: #211b14;
+    font-size: 10pt;
+    position: relative;
+    top: -40px;
+    left: 10px;
+    border-radius: 2.5px;
+    padding: 3px 4px;
+    font-weight: 400;
 }
 
 .create-table {
